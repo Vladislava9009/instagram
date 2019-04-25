@@ -1,0 +1,23 @@
+.content{
+    /* width: 60%; */
+    text-align: left;
+    margin-right: 7%;
+}
+.comment{
+    width:25%;
+    text-align: left;
+    margin-top:62px;
+}
+
+.post{
+    display: flex;
+    justify-content: center; 
+    
+}
+.post button{
+    height: 35px;
+    width: 150px;
+    background-color: white;
+    border: 1px solid black;
+    cursor: pointer
+}

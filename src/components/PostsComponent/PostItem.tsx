@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { async } from 'q';
+
 
 interface IProps{
     userName:string;
@@ -13,9 +13,9 @@ export class PostItem extends Component<IProps>{
         const {userName,url,likes,text}=this.props
         return(
             <div>
-                <p>{userName}</p>
+                <h5>{userName}</h5>
                 <img src={url} alt=""/>
-                <p>{likes}</p>
+                <p>Likes-{likes}</p>
                 <p>{text}</p>
                 <hr/>
             </div>

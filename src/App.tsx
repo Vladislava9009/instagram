@@ -1,16 +1,25 @@
 import React from 'react';
 
 import './App.css';
-import { PostItem } from './components/PostsComponent/PostItem';
-import { Posts } from './components/PostsComponent/Posts';
+import { Feeds } from './pages/FeedPage/FeedPage';
+import { Post } from './pages/PostPage/PostPage';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+
 
 const App: React.FC = () => {
   return (
-    <div>
-      <Posts/>
-      <Posts/>
-      <Posts/>
-    </div>
+   
+    <BrowserRouter >
+           
+             <Switch>
+                <Route path='/' component={Feeds} exact/>
+                <Route path='/post' component={Post} exact/>
+             </Switch> 
+         
+      </BrowserRouter>
+    
+    
   );
 }
 

@@ -1,0 +1,10 @@
+.feed{
+    width: 320px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: left;
+}
+.feed img{
+    display:block;
+     margin:0 auto;
+}
