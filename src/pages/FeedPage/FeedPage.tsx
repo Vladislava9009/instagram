@@ -2,26 +2,15 @@ import React,{ Component } from 'react';
 import styles from './FeedPage.module.css';
 import  PostItem  from '../../components/PostsComponent/PostItem';
 import { Link } from 'react-router-dom';
+import { getPost} from '../../store/actions'
 
 
-
-
-
-const ACCES_TOKEN='10639700024.ea27c77.666afe3f441941ff8815d538ec75069a';
-const URL='https://api.instagram.com/v1/users/self/media/recent/?access_token='
-
-async function getPost(){
-    
-        let response= await fetch(`${URL}+${ACCES_TOKEN}+&count=9`);
-        let data = await response.json()
-        return (data.data)
-    
-}
 interface IState{
     postsArr:Array<{ user: {username:string},
                         images: {low_resolution:{url:string}},
                         likes:{count:number},
                         caption:{text:string,id:number},
+                        id:string
                     }>
 }
 interface IProps{
@@ -33,8 +22,7 @@ export class Feeds extends Component<IProps>{
         postsArr: [],
       }
     onClick(){
-        console.log(this.props)
-       
+              
     }
 
     componentDidMount(){
@@ -42,20 +30,19 @@ export class Feeds extends Component<IProps>{
     }
 
     render(){
-       
         return(
             <div className={styles.feed}>
-                { this.state.postsArr.map(post=>(
-               
-               <Link to="/post" key={post.caption.id}>
-                 <PostItem key={post.caption.id}
-                            userName={post.user.username}
-                            url={post.images.low_resolution.url}
-                            likes={post.likes.count}
-                            text={post.caption.text}
-                            method={this.onClick}
-                           />
-               </Link>
+                { this.state.postsArr.map(post=>(                   
+                    <Link to="/post" key={post.caption===null? '2015939834031738006_10639700024':post.caption.id}>
+                        <PostItem key={post.caption===null? '2015939834031738006_10639700024':post.caption.id}
+                                    userName={post.user.username}
+                                    url={post.images.low_resolution.url}
+                                    likes={post.likes.count}
+                                    text={post.caption===null? '':post.caption.text}
+                                    method={this.onClick}
+                                    id={post.id}
+                                />
+                    </Link>
                
                 ))}    
             </div>

@@ -11,8 +11,7 @@ export class CommentItem extends Component<IProps>{
         const {text}=this.props
         return(
             <div className={styles.comment}>
-                <p>{text}</p>
-                
+                <p>{text}</p> 
             </div>
         )
     }

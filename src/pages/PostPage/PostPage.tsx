@@ -4,30 +4,20 @@ import  PostItem  from '../../components/PostsComponent/PostItem';
 import { CommentItem } from '../../components/CommentComponent/CommentItem';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import {getComments} from '../../store/actions'
 
-const ACCES_TOKEN='10639700024.ea27c77.666afe3f441941ff8815d538ec75069a';
-const URL='https://api.instagram.com/v1/media/2015939834031738006_10639700024/comments?access_token='
 
-async function getPost(){
-    
-        let response= await fetch(`${URL}+${ACCES_TOKEN}`);
-        let data = await response.json()
-        console.log(data.data)
-        return (data.data)
-    
-}
-
-getPost()
 
 interface IProps{
     post:{
         userName:string;
         url:string;
         likes:number;
+        id:string
     }
    }
 interface IState{
-    commentArr:Array<{ text:string
+    commentArr:Array<{ text:string, id:string
                 }>
 }
 
@@ -37,11 +27,11 @@ class Post extends Component<IProps>{
       }
    
     onClick(){
-        console.log(this)
+        
     }
 
     componentDidMount(){
-        getPost().then(result => this.setState({ commentArr: result }));
+        getComments(this.props.post.id).then(result => this.setState({ commentArr: result }));
      }
 
     render(){
@@ -52,7 +42,7 @@ class Post extends Component<IProps>{
             commentItem= <CommentItem text='Комментариев нет'/>
         }else{
             commentItem= this.state.commentArr.map(comment=>(
-            <CommentItem text={comment.text}/>
+            <CommentItem key={comment.id}text={comment.text}/>
         ))
         }
         return(
@@ -62,7 +52,7 @@ class Post extends Component<IProps>{
                                 url={this.props.post.url}
                                 likes={this.props.post.likes}
                                 text=''
-                                
+                                id={this.props.post.id}
                                />
                     <Link id={styles.button} to="/">Back to Feed</Link>
                     </div>
@@ -77,5 +67,5 @@ const mapStateToProps = (state:any) => ({
     post: state.post,
   });
 
-export default connect(mapStateToProps, null)(Post);
+export default connect(mapStateToProps, {getComments})(Post);
 

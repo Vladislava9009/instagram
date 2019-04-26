@@ -11,14 +11,16 @@ interface IProps{
     url:string;
     likes:number;
     text:string;
+    id:string;
     method?:any;
     setPost:any;
 }
 interface IState{
-    user:{
+    post:{
         userName:string,
         url:string,
         likes:number;
+        id:string;
     }
     
 }
@@ -26,15 +28,16 @@ interface IState{
 
 class PostItem extends Component<IProps>{
     state:IState = {
-        user:{
+        post:{
             userName:this.props.userName,
             url:this.props.url,
             likes:this.props.likes,
+            id:this.props.id
         },
       }
 
       onClick(){
-        this.props.setPost(this.state.user)
+        this.props.setPost(this.state.post)
     }
   
     render(){
