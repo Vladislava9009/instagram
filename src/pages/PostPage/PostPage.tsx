@@ -1,48 +1,81 @@
 import React,{ Component } from 'react';
 import styles from './PostPage.module.css';
-import { PostItem } from '../../components/PostsComponent/PostItem';
+import  PostItem  from '../../components/PostsComponent/PostItem';
 import { CommentItem } from '../../components/CommentComponent/CommentItem';
-
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const ACCES_TOKEN='10639700024.ea27c77.666afe3f441941ff8815d538ec75069a';
-const URL='https://api.instagram.com/v1/users/self/media/recent/?access_token='
+const URL='https://api.instagram.com/v1/media/2015939834031738006_10639700024/comments?access_token='
 
 async function getPost(){
     
-        let response= await fetch(`${URL}+${ACCES_TOKEN}+&count=9`);
+        let response= await fetch(`${URL}+${ACCES_TOKEN}`);
         let data = await response.json()
         console.log(data.data)
         return (data.data)
     
 }
+
+getPost()
+
+interface IProps{
+    post:{
+        userName:string;
+        url:string;
+        likes:number;
+    }
+   }
 interface IState{
-    postsArr:Array<{ user: {username:string},
-                        images: {low_resolution:{url:string}},
-                        likes:{count:number},
-                        caption:{text:string}
-                    }>
+    commentArr:Array<{ text:string
+                }>
 }
 
-export class Post extends Component{
+class Post extends Component<IProps>{
     state:IState = {
-        postsArr: [],
+        commentArr: [],
       }
-
-    componentDidMount(){
-       getPost().then(result => this.setState({ postsArr: result }));
+   
+    onClick(){
+        console.log(this)
     }
 
+    componentDidMount(){
+        getPost().then(result => this.setState({ commentArr: result }));
+     }
+
     render(){
+         
+        let commentItem;
+
+        if(this.state.commentArr===null|| this.state.commentArr.length===0){
+            commentItem= <CommentItem text='Комментариев нет'/>
+        }else{
+            commentItem= this.state.commentArr.map(comment=>(
+            <CommentItem text={comment.text}/>
+        ))
+        }
         return(
             <div className={styles.post}>
                 <div className={styles.content}>
-                    <PostItem userName='Влада' url="https://scontent.cdninstagram.com/vp/ea158f1e07e48c5cfe68c45eaca12ed1/5D3A890B/t51.2885-15/e35/p320x320/56459642_450397259028981_4681921818870562930_n.jpg?_nc_ht=scontent.cdninstagram.com" likes={55} text=''/>
-                    <button>Back to Feed</button>
+                    <PostItem  userName={this.props.post.userName}
+                                url={this.props.post.url}
+                                likes={this.props.post.likes}
+                                text=''
+                                
+                               />
+                    <Link id={styles.button} to="/">Back to Feed</Link>
                     </div>
-                <div className={styles.comment}><CommentItem userName='FFF'text='fff'/></div>
+                <div className={styles.comment}>
+                    {commentItem}
+                </div>
             </div>
         )
     }
 }
+const mapStateToProps = (state:any) => ({
+    post: state.post,
+  });
 
+export default connect(mapStateToProps, null)(Post);
 

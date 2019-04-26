@@ -14,9 +14,9 @@
     justify-content: center; 
     
 }
-.post button{
-    height: 35px;
-    width: 150px;
+#button{
+    padding: 7px 30px;
+    text-decoration: none;
     background-color: white;
     border: 1px solid black;
     cursor: pointer
