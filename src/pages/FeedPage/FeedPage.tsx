@@ -30,14 +30,17 @@ export class Feeds extends Component<IProps> {
   render() {
     if (!localStorage.token) {
       window.location.replace(
-        'https://www.instagram.com/oauth/authorize/?client_id=aa2fc54b1cdf4310bca1be064b3c5e50&redirect_uri=http://localhost:3000/&response_type=token'
+        'https://instagram.com/oauth/authorize/?client_id=10577e4d6ed64640966a7f6577188a2b&redirect_uri=http://localhost:3000/&response_type=token&hl=en'
       );
-      const ACCESS_TOKEN = window.location.hash
-        .substring(1)
-        .substr(window.location.hash.substring(1).indexOf('access_token='))
-        .split('&')[0]
-        .split('=')[1];
-      localStorage.setItem('token', ACCESS_TOKEN);
+      if (window.location.hash != '') {
+        const ACCESS_TOKEN = window.location.hash
+          .substring(1)
+          .substr(window.location.hash.substring(1).indexOf('access_token='))
+          .split('&')[0]
+          .split('=')[1];
+        console.log(ACCESS_TOKEN);
+        localStorage.setItem('token', ACCESS_TOKEN);
+      }
     }
 
     return (
