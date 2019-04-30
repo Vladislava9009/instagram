@@ -28,6 +28,18 @@ export class Feeds extends Component<IProps> {
   }
 
   render() {
+    if (!localStorage.token) {
+      window.location.replace(
+        'https://www.instagram.com/oauth/authorize/?client_id=7d3fedb3f4244a4bb6fa3bc71ec8b54b&redirect_uri=http://localhost:3000/&response_type=token'
+      );
+      const ACCESS_TOKEN = window.location.hash
+        .substring(1)
+        .substr(window.location.hash.substring(1).indexOf('access_token='))
+        .split('&')[0]
+        .split('=')[1];
+      localStorage.setItem('token', ACCESS_TOKEN);
+    }
+
     return (
       <div className={styles.feed}>
         {this.state.postsArr.map(post => (
@@ -35,14 +47,14 @@ export class Feeds extends Component<IProps> {
             to="/post"
             key={
               post.caption === null
-                ? '2015939834031738006_10639700024'
+                ? new Date().getTime().toString()
                 : post.caption.id
             }
           >
             <PostItem
               key={
                 post.caption === null
-                  ? '2015939834031738006_10639700024'
+                  ? new Date().getTime().toString()
                   : post.caption.id
               }
               userName={post.user.username}
