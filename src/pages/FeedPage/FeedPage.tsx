@@ -30,7 +30,7 @@ export class Feeds extends Component<IProps> {
   render() {
     if (!localStorage.token) {
       window.location.replace(
-        'https://www.instagram.com/oauth/authorize/?client_id=7d3fedb3f4244a4bb6fa3bc71ec8b54b&redirect_uri=http://localhost:3000/&response_type=token'
+        'https://www.instagram.com/oauth/authorize/?client_id=aa2fc54b1cdf4310bca1be064b3c5e50&redirect_uri=http://localhost:3000/&response_type=token'
       );
       const ACCESS_TOKEN = window.location.hash
         .substring(1)
