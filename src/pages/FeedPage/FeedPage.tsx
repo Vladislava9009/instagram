@@ -27,12 +27,13 @@ export class Feeds extends Component<IProps> {
     getPost().then(result => this.setState({ postsArr: result }));
   }
 
+
   render() {
     if (!localStorage.token) {
       window.location.replace(
         'https://instagram.com/oauth/authorize/?client_id=10577e4d6ed64640966a7f6577188a2b&redirect_uri=http://localhost:3000/&response_type=token&hl=en'
       );
-      if (window.location.hash != '') {
+      if (window.location.hash !== '') {
         const ACCESS_TOKEN = window.location.hash
           .substring(1)
           .substr(window.location.hash.substring(1).indexOf('access_token='))

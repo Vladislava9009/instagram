@@ -34,6 +34,9 @@ class PostItem extends Component<IProps> {
   onClick() {
     this.props.setPost(this.state.post);
   }
+  componentWillUnmount() {
+    document.removeEventListener("click", this.onClick);
+}
 
   render() {
     const { userName, url, likes, text } = this.props;
